@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/zhoushuyi/Documents/VE475/chanllenge/blowfish/main.cpp
+iostream
+-
+cstdint
+-
+string
+-
+cstdlib
+-
+getopt.h
+-
+fstream
+-
+
