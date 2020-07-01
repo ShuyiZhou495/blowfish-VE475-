@@ -1,5 +1,5 @@
 # Blowfish encryption
-according to https://en.wikipedia.org/wiki/Blowfish_(cipher)
+according to <https://en.wikipedia.org/wiki/Blowfish_(cipher)>
 ## completion
 it can complete the demanded function:
 ```$xslt
@@ -16,5 +16,8 @@ Because the ciphertext is only allowed to be alphabet, so I didn't transfer the 
 - If you want to specify the keyfile, please follow the rule: 
     + the first line is key size n
     + the next n lines are the key, which must be 32-bit integer.
+    
+## reference:
+[blowfish wikepedia](<https://en.wikipedia.org/wiki/Blowfish_(cipher)>).
 
 
