@@ -16,6 +16,8 @@ const struct option long_options[]={
         {NULL, 0, NULL, 0}
 };
 
+string base16[16] = {"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"};
+
 uint32_t P[18]={ 0x243f6a88, 0x85a308d3, 0x13198a2e, 0x03707344, 0xa4093822, 0x299f31d0,
                  0x082efa98, 0xec4e6c89, 0x452821e6, 0x38d01377, 0xbe5466cf, 0x34e90c6c,
                  0xc0ac29b7, 0xc97c50dd, 0x3f84d5b5, 0xb5470917, 0x9216d5d9, 0x8979fb1b };
@@ -26,6 +28,34 @@ uint32_t S[4][256] = {{0xd1310ba6, 0x98dfb5ac, 0x2ffd72db, 0xd01adfb7, 0xb8e1afe
 uint32_t f (uint32_t x) {
     uint32_t h = S[0][x >> 24] + S[1][x >> 16 & 0xff];
     return ( h ^ S[2][x >> 8 & 0xff] ) + S[3][x & 0xff];
+}
+
+string bin_str2hex_str(const string & cipher){
+    string result;
+    int length= cipher.length();
+    for(int i = 0; i<length; i+=4){
+        string sub = cipher.substr(i, 4);
+        const char* csub = sub.c_str();
+        char* endptr;
+        result.append(base16[strtoul(csub, &endptr, 2)]);
+    }
+    return result;
+}
+
+string hex_str2bin_str(const string & cipher){
+    string result;
+    int length= cipher.length();
+    for(int i = 0; i<length; i++){
+        int temp = stoi(cipher.substr(i, 1), nullptr, 16);
+        result.append(temp/8==1?"1":"0");
+        temp%=8;
+        result.append(temp/4==1?"1":"0");
+        temp%=4;
+        result.append(temp/2==1?"1":"0");
+        temp%=2;
+        result.append(temp==1?"1":"0");
+    }
+    return result;
 }
 
 string string2bin(const string & plain){
@@ -169,14 +199,17 @@ int main(int argc, char * argv[]) {
                     // encrypt
                     encrypt(L, R);
                     // append
-                    cout<<dec2bin_string(L);
-                    cout<<dec2bin_string(R);
+                    string L_str = dec2bin_string(L);
+                    string R_str = dec2bin_string(R);
+                    cout<<bin_str2hex_str(L_str);
+                    cout<<bin_str2hex_str(R_str);
                 }
                 cout<<endl;
             }
                 break;
             case 'd': {
-                string cipher = optarg;
+                string cipher_bin = optarg;
+                string cipher = hex_str2bin_str(cipher_bin);
                 int keylen = 2;
                 uint32_t key[14] = {0x082eed18, 0xd2314566};
                 next_option = getopt_long(argc, argv, short_options, long_options, NULL);

@@ -9,6 +9,7 @@ i$ ./c2 --decrypt "0000100010110100111111100110011010001101011011101110000101101
 mysecretmessage
 ```
 Because the ciphertext is only allowed to be alphabet, so I didn't transfer the binary code to ascii char, since anyway there will be some "illegal" characters.
+Instead, I ouptput the base16 form of the binary code.
 
 ## generate key:
 - The `--generate` function will first generate a number between 1~14, which is the key size. And according to the generated key size, it will generate some keys.
